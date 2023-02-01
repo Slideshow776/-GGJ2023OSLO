@@ -1,4 +1,4 @@
-# GGJ2023OSLO
+# [GGJ2023OSLO](https://globalgamejam.org/2023/jam-sites/oslo-game-jam)
 // TODO: What is the game about?
 
 ## Credits: 
