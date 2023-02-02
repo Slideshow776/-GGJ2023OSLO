@@ -9,6 +9,9 @@
 	<inherits name='com.badlogic.gdx.controllers' />
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 
+	<inherits name="regexodus" />
+	<inherits name="textratypist" />
+
 	<inherits name='MyGdxGame' />
 	<entry-point class='no.sandramoen.ggj2023oslo.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>

@@ -1,6 +1,5 @@
 package no.sandramoen.ggj2023oslo.actors.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,10 +14,9 @@ public class Background extends BaseActor {
 
     public Background(float x, float y, Stage stage) {
         super(x, y, stage);
-        setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        setColor(Color.BLACK);
-
-        animationImages.add(BaseGame.textureAtlas.findRegion("whitePixel"));
+        animationImages.add(BaseGame.textureAtlas.findRegion("grass"));
         animation = new Animation(2f, animationImages, Animation.PlayMode.LOOP);
+        setAnimation(animation);/*
+        setSize(TiledMapActor.mapWidth, TiledMapActor.mapHeight);*/
     }
 }

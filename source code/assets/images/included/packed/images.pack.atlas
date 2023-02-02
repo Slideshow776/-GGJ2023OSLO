@@ -1,9 +1,23 @@
 
 images.pack.png
-size: 16, 16
+size: 256, 128
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+grass
+  rotate: false
+  xy: 2, 5
+  size: 192, 119
+  orig: 192, 119
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 196, 84
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
 whitePixel
   rotate: false
   xy: 2, 2
