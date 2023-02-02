@@ -28,8 +28,6 @@ public class Player extends BaseActor {
         collisionBox.setBoundaryRectangle();
         collisionBox.setDebug(true);
         addActor(collisionBox);
-        isShakyCam = true;
-        System.out.println("isShakyCam: " + isShakyCam);
     }
 
     public BaseActor getCollisionBox() {
@@ -44,7 +42,6 @@ public class Player extends BaseActor {
         isDead = true;
     }
 
-<<<<<<< HEAD
     private void shakeCamera(float duration) {
         isShakyCam = true;
         new BaseActor(0f, 0f, getStage()).addAction(Actions.sequence(
@@ -55,17 +52,4 @@ public class Player extends BaseActor {
                 })
         ));
     }
-=======
-    private void shakeCameraABit() {
-        isShakyCam = true;
-        new BaseActor(0, 0, getStage()).addAction(Actions.sequence(
-                Actions.delay(1),
-                Actions.run(() -> {
-                    isShakyCam = false;
-                    TiledMapActor.centerCameraOnMap(getStage());
-                })
-        ));
-    }
-
->>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
 }
