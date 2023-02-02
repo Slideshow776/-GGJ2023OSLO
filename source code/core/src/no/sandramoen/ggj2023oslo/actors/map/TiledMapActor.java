@@ -24,6 +24,7 @@ import no.sandramoen.ggj2023oslo.utils.BaseGame;
 public class TiledMapActor extends Actor {
     public static float mapWidth;
     public static float mapHeight;
+    public static Vector2 center;
 
     private TiledMap tiledMap;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
@@ -39,6 +40,7 @@ public class TiledMapActor extends Actor {
         );*/
 
         setMapSize();
+        // calculateCenterOfMap();
         stage.addActor(this);
     }
 
@@ -105,11 +107,12 @@ public class TiledMapActor extends Actor {
         tiledMapRenderer.render();
     }
 
-    public void centerPositionCamera(OrthographicCamera camera, Vector2 centerOfMap) {
+    public static void centerCameraOnMap(Stage stage) {
+        OrthographicCamera camera = (OrthographicCamera) stage.getViewport().getCamera();
         camera.zoom = 1f;
         camera.position.set(new Vector3(
-                centerOfMap.x,
-                centerOfMap.y,
+                center.x,
+                center.y,
                 0f
         ));
         camera.update();
@@ -118,6 +121,7 @@ public class TiledMapActor extends Actor {
     private void setMapSize() {
         mapWidth = tiledMap.getProperties().get("width", Integer.class);
         mapHeight = tiledMap.getProperties().get("height", Integer.class);
+        center = new Vector2(mapWidth / 2, mapHeight / 2);
     }
 
     private Vector2 calculateCenterOfMap() {
@@ -125,8 +129,10 @@ public class TiledMapActor extends Actor {
         int tileHeight = tiledMap.getProperties().get("tileheight", Integer.class);
         int numTilesHorizontal = tiledMap.getProperties().get("width", Integer.class);
         int numTilesVertical = tiledMap.getProperties().get("height", Integer.class);
-        mapWidth = tileWidth * numTilesHorizontal;
-        mapHeight = tileHeight * numTilesVertical;
+        int mapWidth = tileWidth * numTilesHorizontal;
+        int mapHeight = tileHeight * numTilesVertical;
+
+
 
         System.out.println("center of map: (" + mapWidth / 2 + ", " + mapHeight / 2 + ")");
         System.out.println("center of screen: (" + Gdx.graphics.getWidth() / 2 + ", " + Gdx.graphics.getHeight() / 2 + ")");

@@ -2,7 +2,9 @@ package no.sandramoen.ggj2023oslo.actors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
+import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 
 public class Player extends BaseActor {
@@ -28,6 +30,8 @@ public class Player extends BaseActor {
         collisionBox.setBoundaryRectangle();
         // collisionBox.setDebug(true);
         addActor(collisionBox);
+        isShakyCam = true;
+        System.out.println("isShakyCam: " + isShakyCam);
     }
 
     public BaseActor getCollisionBox() {
@@ -40,6 +44,17 @@ public class Player extends BaseActor {
 
     public void die() {
         isDead = true;
+    }
+
+    private void shakeCameraABit() {
+        isShakyCam = true;
+        new BaseActor(0, 0, getStage()).addAction(Actions.sequence(
+                Actions.delay(1),
+                Actions.run(() -> {
+                    isShakyCam = false;
+                    TiledMapActor.centerCameraOnMap(getStage());
+                })
+        ));
     }
 
 }
