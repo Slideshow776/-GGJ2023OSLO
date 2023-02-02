@@ -43,7 +43,7 @@ public abstract class BaseScreen implements Screen, InputProcessor, ControllerLi
             update(delta);
         }
 
-        Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+        Gdx.gl.glClearColor(.035f, .039f, .078f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mainStage.getViewport().apply();
