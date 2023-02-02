@@ -23,8 +23,14 @@ import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 
 public class TiledMapActor extends Actor {
+<<<<<<< HEAD
     public static int mapTileWidth;
     public static int mapTileHeight;
+=======
+    public static float mapWidth;
+    public static float mapHeight;
+    public static Vector2 center;
+>>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
 
     private static TiledMap tiledMap;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
@@ -36,8 +42,12 @@ public class TiledMapActor extends Actor {
         tiledMapRenderer.setBlending(true);
 
         setMapSize();
+<<<<<<< HEAD
         centerPositionCamera(stage);
         BaseActor.setWorldBounds(mapTileWidth, mapTileHeight);
+=======
+        // calculateCenterOfMap();
+>>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
         stage.addActor(this);
     }
 
@@ -104,20 +114,35 @@ public class TiledMapActor extends Actor {
         tiledMapRenderer.render();
     }
 
+<<<<<<< HEAD
     public static void centerPositionCamera(Stage stage) {
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
         camera.zoom = 1f;
         camera.position.set(new Vector3(
                 mapTileWidth / 2,
                 mapTileHeight / 2,
+=======
+    public static void centerCameraOnMap(Stage stage) {
+        OrthographicCamera camera = (OrthographicCamera) stage.getViewport().getCamera();
+        camera.zoom = 1f;
+        camera.position.set(new Vector3(
+                center.x,
+                center.y,
+>>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
                 0f
         ));
         camera.update();
     }
 
     private void setMapSize() {
+<<<<<<< HEAD
         mapTileWidth = tiledMap.getProperties().get("width", Integer.class);
         mapTileHeight = tiledMap.getProperties().get("height", Integer.class);
+=======
+        mapWidth = tiledMap.getProperties().get("width", Integer.class);
+        mapHeight = tiledMap.getProperties().get("height", Integer.class);
+        center = new Vector2(mapWidth / 2, mapHeight / 2);
+>>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
     }
 
     private static Vector2 calculateAbsoluteCenterOfMap() {
@@ -127,6 +152,11 @@ public class TiledMapActor extends Actor {
         int numTilesVertical = tiledMap.getProperties().get("height", Integer.class);
         int mapWidth = tileWidth * numTilesHorizontal;
         int mapHeight = tileHeight * numTilesVertical;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 77fc0ed18aadbd09f2b051eac9902b08c27b6bf7
 
         System.out.println("center of map: (" + mapWidth / 2 + ", " + mapHeight / 2 + ")");
         System.out.println("center of screen: (" + Gdx.graphics.getWidth() / 2 + ", " + Gdx.graphics.getHeight() / 2 + ")");
