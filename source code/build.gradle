@@ -104,8 +104,8 @@ project(":html") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
-        implementation "com.github.tommyettinger:textratypist:0.7.4:sources"
-        implementation "com.github.tommyettinger:regexodus:0.1.13:sources"
+        implementation "com.github.tommyettinger:textratypist:0.7.5:sources"
+        implementation "com.github.tommyettinger:regexodus:0.1.15:sources"
         
     }
 }
@@ -121,7 +121,7 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-        implementation "com.github.tommyettinger:textratypist:0.7.4"
+        implementation "com.github.tommyettinger:textratypist:0.7.5"
         
     }
 
