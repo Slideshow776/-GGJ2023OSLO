@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -75,7 +76,7 @@ public class LevelScreen extends BaseScreen {
         if (isListCollisions())
             generateNewElement();
         else
-            element.addAction(Actions.moveTo(spawnPoint.x, spawnPoint.y, .5f));
+            moveElementToSpawnPoint();
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
@@ -100,6 +101,10 @@ public class LevelScreen extends BaseScreen {
             camera.zoom += .1f;
         }
         return super.keyDown(keycode);
+    }
+
+    private void moveElementToSpawnPoint() {
+        element.addAction(Actions.moveTo(spawnPoint.x, spawnPoint.y, .5f, Interpolation.smoother));
     }
 
     private boolean isListCollisions() {

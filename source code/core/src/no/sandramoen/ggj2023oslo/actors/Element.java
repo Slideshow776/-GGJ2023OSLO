@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
@@ -20,6 +21,7 @@ public class Element extends BaseActor {
         loadImage("whitePixel");
         setSize(4, 4);
         setBoundaryRectangle();
+        setOrigin(Align.center);
 
         setType();
         setDebug(true);
