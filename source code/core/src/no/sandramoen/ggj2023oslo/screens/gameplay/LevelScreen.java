@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.textra.TypingLabel;
 
 import no.sandramoen.ggj2023oslo.actors.Element;
+import no.sandramoen.ggj2023oslo.actors.ListA;
+import no.sandramoen.ggj2023oslo.actors.ListB;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
@@ -24,7 +26,9 @@ public class LevelScreen extends BaseScreen {
     private TiledMap currentMap;
 
     private Array<ImpassableTerrain> impassables;
-    private Element player;
+    private Element element;
+    private ListA listA;
+    private ListB listB;
 
     private TypingLabel topLabel;
 
@@ -69,8 +73,8 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void loadActorsFromMap() {
-        MapLoader mapLoader = new MapLoader(mainStage, tilemap, player, impassables);
-        player = mapLoader.player;
+        MapLoader mapLoader = new MapLoader(mainStage, tilemap, element, impassables, listA, listB);
+        element = mapLoader.element;
     }
 
     private void mapCenterCamera() {

@@ -7,27 +7,35 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import no.sandramoen.ggj2023oslo.actors.Element;
+import no.sandramoen.ggj2023oslo.actors.ListA;
+import no.sandramoen.ggj2023oslo.actors.ListB;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 
 public class MapLoader {
-    public Element player;
+    public Element element;
     public Array<ImpassableTerrain> impassables;
+    public ListA listA;
+    public ListB listB;
 
     private TiledMapActor tilemap;
     private Stage mainStage;
 
     public MapLoader(Stage mainStage, TiledMapActor tilemap,
-                     Element player, Array<ImpassableTerrain> impassables) {
+                     Element player, Array<ImpassableTerrain> impassables, ListA listA, ListB listB) {
         this.tilemap = tilemap;
         this.mainStage = mainStage;
 
-        this.player = player;
+        this.element = player;
         this.impassables = impassables;
+        this.listA = listA;
+        this.listB = listB;
 
         initializeElement();
         initializeImpassables();
+        initializeListA();
+        initializeListB();
     }
 
     private void initializeImpassables() {
@@ -49,12 +57,44 @@ public class MapLoader {
             MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
-            player = new Element(x, y, mainStage);
+            element = new Element(x, y, mainStage);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {
             Gdx.app.error(getClass().getSimpleName(), "Error => found no property: " + propertyName + " on layer: " + layerName + "!");
-            player = null;
+            element = null;
+        }
+    }
+
+    private void initializeListA() {
+        String layerName = "actors";
+        String propertyName = "listA";
+        if (tilemap.getTileList(layerName, propertyName).size() == 1) {
+            MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
+            float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
+            float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
+            listA = new ListA(x, y, mainStage);
+        } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
+            Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
+        } else {
+            Gdx.app.error(getClass().getSimpleName(), "Error => found no property: " + propertyName + " on layer: " + layerName + "!");
+            listA = null;
+        }
+    }
+
+    private void initializeListB() {
+        String layerName = "actors";
+        String propertyName = "listB";
+        if (tilemap.getTileList(layerName, propertyName).size() == 1) {
+            MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
+            float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
+            float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
+            listB = new ListB(x, y, mainStage);
+        } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
+            Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
+        } else {
+            Gdx.app.error(getClass().getSimpleName(), "Error => found no property: " + propertyName + " on layer: " + layerName + "!");
+            listB = null;
         }
     }
 }

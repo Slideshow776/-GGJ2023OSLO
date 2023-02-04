@@ -14,6 +14,7 @@ public class Element extends BaseActor {
         super(x, y, stage);
         loadImage("whitePixel");
         setSize(4, 4);
+        centerAtPosition(x, y);
     }
 
     private void shakeCamera(float duration) {
