@@ -32,8 +32,10 @@ public class LevelScreen extends BaseScreen {
 
     private boolean isGameOver;
     private Vector2 spawnPoint;
+    private int score;
 
     private TypingLabel topLabel;
+    private TypingLabel middleLabel;
 
     private TiledMapActor tilemap;
     private TiledMap currentMap;
@@ -56,9 +58,12 @@ public class LevelScreen extends BaseScreen {
         if (!isGameOver) {
             if (listA.isMaxCapacity() && listB.isMaxCapacity()) {
                 isGameOver = true;
-                topLabel.setVisible(true);
-                topLabel.restart();
+                middleLabel.setVisible(true);
+                middleLabel.restart();
             }
+
+            checkAndUpdateScore(listA);
+            checkAndUpdateScore(listB);
         }
     }
 
@@ -124,6 +129,15 @@ public class LevelScreen extends BaseScreen {
         element = new Element(spawnPoint.x, spawnPoint.y, mainStage);
     }
 
+    private void checkAndUpdateScore(List list) {
+        if (list.isScore) {
+            score += list.NUM_SAME_TYPE;
+            topLabel.restart();
+            topLabel.setText("score: " + score);
+            list.isScore = false;
+        }
+    }
+
     private void initializeActors() {
         impassables = new Array();
         loadActorsFromMap();
@@ -150,12 +164,17 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void initializeGUI() {
-        topLabel = new TypingLabel("{SLOWER}G A M E   O V E R !", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold59white", BitmapFont.class), null));
+        topLabel = new TypingLabel("score: 0", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold40white", BitmapFont.class), null));
         topLabel.setAlignment(Align.top);
-        topLabel.setVisible(false);
+        topLabel.setVisible(true);
+
+        middleLabel = new TypingLabel("{SLOWER}G A M E   O V E R !", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold59white", BitmapFont.class), null));
+        middleLabel.setAlignment(Align.top);
+        middleLabel.setVisible(false);
 
         uiTable.defaults().padTop(Gdx.graphics.getHeight() * .02f);
-        uiTable.add(topLabel).height(topLabel.getPrefHeight() * 1.5f).expandY().top().row();
+        uiTable.add(topLabel).height(topLabel.getPrefHeight() * 1.5f).expandY().top().width(Gdx.graphics.getWidth()).row();
+        uiTable.add(middleLabel).height(middleLabel.getPrefHeight() * 1.5f).expandY().top().row();
         // uiTable.setDebug(true);
     }
 }

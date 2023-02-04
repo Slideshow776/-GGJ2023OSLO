@@ -9,9 +9,10 @@ import com.badlogic.gdx.utils.Array;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 
 public class List extends BaseActor {
+    public boolean isScore;
+    public final int NUM_SAME_TYPE = 3;
 
     private int maxCapacity;
-    private final int NUM_SAME_TYPE = 3;
     private Array<Element> elements;
 
     public List(float x, float y, Stage stage) {
@@ -23,6 +24,7 @@ public class List extends BaseActor {
 
         elements = new Array<>();
     }
+
 
     public void setMaxCapacity(float elementHeight) {
         maxCapacity = (int) (getHeight() / elementHeight);
@@ -55,6 +57,7 @@ public class List extends BaseActor {
 
         return true;
     }
+
 
     private void setElementsPositionWithDelay() {
         if (elements.isEmpty())
@@ -106,6 +109,7 @@ public class List extends BaseActor {
                 for (int j = 0; j < NUM_SAME_TYPE; j++)
                     elements.removeIndex(i);
 
+                isScore = true;
                 setElementsPositionWithDelay(.5f);
                 break;
             }
