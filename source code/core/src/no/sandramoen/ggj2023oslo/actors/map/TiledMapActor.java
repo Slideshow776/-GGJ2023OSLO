@@ -105,7 +105,6 @@ public class TiledMapActor extends Actor {
     }
 
     public static void centerPositionCamera(Stage stage) {
-        System.out.println(mapTileWidth / 2 + ", " + mapTileHeight / 2);
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
         camera.zoom = 1f;
         camera.position.set(new Vector3(

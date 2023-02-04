@@ -1,14 +1,14 @@
 package no.sandramoen.ggj2023oslo.screens.gameplay;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import no.sandramoen.ggj2023oslo.actors.Element;
-import no.sandramoen.ggj2023oslo.actors.ListA;
-import no.sandramoen.ggj2023oslo.actors.ListB;
+import no.sandramoen.ggj2023oslo.actors.List;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
@@ -16,14 +16,14 @@ import no.sandramoen.ggj2023oslo.utils.BaseGame;
 public class MapLoader {
     public Element element;
     public Array<ImpassableTerrain> impassables;
-    public ListA listA;
-    public ListB listB;
+    public List listA;
+    public List listB;
 
     private TiledMapActor tilemap;
     private Stage mainStage;
 
     public MapLoader(Stage mainStage, TiledMapActor tilemap,
-                     Element player, Array<ImpassableTerrain> impassables, ListA listA, ListB listB) {
+                     Element player, Array<ImpassableTerrain> impassables, List listA, List listB) {
         this.tilemap = tilemap;
         this.mainStage = mainStage;
 
@@ -32,10 +32,10 @@ public class MapLoader {
         this.listA = listA;
         this.listB = listB;
 
-        initializeElement();
         initializeImpassables();
         initializeListA();
         initializeListB();
+        initializeElement();
     }
 
     private void initializeImpassables() {
@@ -52,7 +52,7 @@ public class MapLoader {
 
     private void initializeElement() {
         String layerName = "actors";
-        String propertyName = "player";
+        String propertyName = "element";
         if (tilemap.getTileList(layerName, propertyName).size() == 1) {
             MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
@@ -73,7 +73,8 @@ public class MapLoader {
             MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
-            listA = new ListA(x, y, mainStage);
+            listA = new List(x, y, mainStage);
+            listA.setColor(Color.LIGHT_GRAY);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {
@@ -89,7 +90,8 @@ public class MapLoader {
             MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
-            listB = new ListB(x, y, mainStage);
+            listB = new List(x, y, mainStage);
+            listB.setColor(Color.LIGHT_GRAY);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {
