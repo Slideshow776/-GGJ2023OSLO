@@ -23,8 +23,8 @@ import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 
 public class TiledMapActor extends Actor {
-    public static int mapTileWidth;
-    public static int mapTileHeight;
+    public static float mapTileWidth;
+    public static float mapTileHeight;
 
     private static TiledMap tiledMap;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
@@ -105,6 +105,7 @@ public class TiledMapActor extends Actor {
     }
 
     public static void centerPositionCamera(Stage stage) {
+        System.out.println(mapTileWidth / 2 + ", " + mapTileHeight / 2);
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
         camera.zoom = 1f;
         camera.position.set(new Vector3(
@@ -116,8 +117,8 @@ public class TiledMapActor extends Actor {
     }
 
     private void setMapSize() {
-        mapTileWidth = tiledMap.getProperties().get("width", Integer.class);
-        mapTileHeight = tiledMap.getProperties().get("height", Integer.class);
+        mapTileWidth = (float) tiledMap.getProperties().get("width", Integer.class);
+        mapTileHeight = (float)  tiledMap.getProperties().get("height", Integer.class);
     }
 
     private static Vector2 calculateAbsoluteCenterOfMap() {

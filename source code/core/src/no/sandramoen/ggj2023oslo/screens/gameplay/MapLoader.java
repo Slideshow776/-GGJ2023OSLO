@@ -6,27 +6,27 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
-import no.sandramoen.ggj2023oslo.actors.Player;
+import no.sandramoen.ggj2023oslo.actors.Element;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 
 public class MapLoader {
-    public Player player;
+    public Element player;
     public Array<ImpassableTerrain> impassables;
 
     private TiledMapActor tilemap;
     private Stage mainStage;
 
     public MapLoader(Stage mainStage, TiledMapActor tilemap,
-                     Player player, Array<ImpassableTerrain> impassables) {
+                     Element player, Array<ImpassableTerrain> impassables) {
         this.tilemap = tilemap;
         this.mainStage = mainStage;
 
         this.player = player;
         this.impassables = impassables;
 
-        initializePlayer();
+        initializeElement();
         initializeImpassables();
     }
 
@@ -42,14 +42,14 @@ public class MapLoader {
             }
     }
 
-    private void initializePlayer() {
+    private void initializeElement() {
         String layerName = "actors";
         String propertyName = "player";
         if (tilemap.getTileList(layerName, propertyName).size() == 1) {
             MapObject mapObject = tilemap.getTileList(layerName, propertyName).get(0);
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
-            player = new Player(x, y, mainStage);
+            player = new Element(x, y, mainStage);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import com.github.tommyettinger.textra.TypingLabel;
 
-import no.sandramoen.ggj2023oslo.actors.Player;
+import no.sandramoen.ggj2023oslo.actors.Element;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
@@ -24,7 +24,7 @@ public class LevelScreen extends BaseScreen {
     private TiledMap currentMap;
 
     private Array<ImpassableTerrain> impassables;
-    private Player player;
+    private Element player;
 
     private TypingLabel topLabel;
 
