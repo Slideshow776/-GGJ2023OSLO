@@ -70,7 +70,7 @@ public class LevelScreen extends BaseScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 worldCoordinates = mainStage.getCamera().unproject(new Vector3(screenX, screenY, 0f));
-        if (element.getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y)))
+        if (element.getCollisionBox().getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y)))
             element.isActive = true;
         return super.touchDown(screenX, screenY, pointer, button);
     }
@@ -89,7 +89,7 @@ public class LevelScreen extends BaseScreen {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Vector3 worldCoordinates = mainStage.getCamera().unproject(new Vector3(screenX, screenY, 0f));
         if (element.isActive)
-            element.setPosition(worldCoordinates.x - element.getWidth() / 2, worldCoordinates.y - element.getHeight() / 2);
+            element.addAction(Actions.moveTo(worldCoordinates.x - element.getWidth() / 2, worldCoordinates.y - element.getHeight() / 2, .1f, Interpolation.smoother));
         return super.touchDragged(screenX, screenY, pointer);
     }
 
@@ -113,13 +113,13 @@ public class LevelScreen extends BaseScreen {
     }
 
     private boolean isListCollisions() {
-        if (element.overlaps(listA) && element.getY() > (listA.getY() + listA.getHeight() / 2)) {
+        if (element.overlaps(listA.getCollisionBox()) && element.getY() > (listA.getY() + listA.getHeight() / 2)) {
             return listA.tryInsertOnTop(element);
-        } else if (element.overlaps(listA) && element.getY() <= (listA.getY() + listA.getHeight() / 2)) {
+        } else if (element.overlaps(listA.getCollisionBox()) && element.getY() <= (listA.getY() + listA.getHeight() / 2)) {
             return listA.tryInsertOnBottom(element);
-        } else if (element.overlaps(listB) && element.getY() > (listB.getY() + listB.getHeight() / 2)) {
+        } else if (element.overlaps(listB.getCollisionBox()) && element.getY() > (listB.getY() + listB.getHeight() / 2)) {
             return listB.tryInsertOnTop(element);
-        } else if (element.overlaps(listB) && element.getY() <= (listB.getY() + listB.getHeight() / 2)) {
+        } else if (element.overlaps(listB.getCollisionBox()) && element.getY() <= (listB.getY() + listB.getHeight() / 2)) {
             return listB.tryInsertOnBottom(element);
         }
         return false;

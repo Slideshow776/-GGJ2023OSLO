@@ -10,11 +10,11 @@ import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 
 public class Element extends BaseActor {
-    public boolean isDead;
     public boolean isActive;
     public Types type;
 
     private enum Types {RED, YELLOW, BLUE}
+    private BaseActor collisionBox;
 
     public Element(float x, float y, Stage stage) {
         super(x, y, stage);
@@ -24,7 +24,16 @@ public class Element extends BaseActor {
         setOrigin(Align.center);
 
         setType();
-        setDebug(true);
+
+        setCollisionBox();
+    }
+
+    public BaseActor getCollisionBox() {
+        collisionBox.setPosition(
+                getX() + getWidth() / 2 - collisionBox.getWidth() / 2,
+                getY() + getHeight() / 2 - collisionBox.getHeight() / 2
+        );
+        return collisionBox;
     }
 
     private void setType() {
@@ -50,5 +59,17 @@ public class Element extends BaseActor {
                     TiledMapActor.centerPositionCamera(getStage());
                 })
         ));
+    }
+
+    private void setCollisionBox() {
+        int scale = 4;
+        collisionBox = new BaseActor(0, 0, getStage());
+        collisionBox.setSize(getWidth() * scale, getHeight() * scale);
+        collisionBox.setPosition(
+                getWidth() / 2 - collisionBox.getWidth() / 2,
+                getHeight() / 2 - collisionBox.getHeight() / 2
+        );
+        collisionBox.setBoundaryRectangle();
+        addActor(collisionBox);
     }
 }

@@ -14,6 +14,7 @@ public class List extends BaseActor {
 
     private int maxCapacity;
     private Array<Element> elements;
+    private BaseActor collisionBox;
 
     public List(float x, float y, Stage stage) {
         super(x, y, stage);
@@ -21,6 +22,7 @@ public class List extends BaseActor {
         setSize(4, 32);
         centerAtPosition(x, y);
         setBoundaryRectangle();
+        setCollisionBox();
 
         elements = new Array<>();
     }
@@ -58,6 +60,27 @@ public class List extends BaseActor {
         return true;
     }
 
+    public BaseActor getCollisionBox() {
+        collisionBox.setPosition(
+                getX() + getWidth() / 2 - collisionBox.getWidth() / 2,
+                getY() + getHeight() / 2 - collisionBox.getHeight() / 2
+        );
+        return collisionBox;
+    }
+
+
+    private void setCollisionBox() {
+        int scale = 8;
+        collisionBox = new BaseActor(0, 0, getStage());
+        collisionBox.setSize(getWidth() * scale, getHeight() * scale);
+        collisionBox.setPosition(
+                getWidth() / 2 - collisionBox.getWidth() / 2,
+                getHeight() / 2 - collisionBox.getHeight() / 2
+        );
+        collisionBox.setBoundaryRectangle();
+        collisionBox.setDebug(true);
+        addActor(collisionBox);
+    }
 
     private void setElementsPositionWithDelay() {
         if (elements.isEmpty())
