@@ -16,7 +16,7 @@ public class DesktopLauncher {
         config.setResizable(false);
         // config.setWindowIcon("images/excluded/icon_16x16.png", "images/excluded/icon_32x32.png");
 
-        boolean isFullscreen = false;
+        boolean isFullscreen = true;
         if (isFullscreen)
             config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         else
