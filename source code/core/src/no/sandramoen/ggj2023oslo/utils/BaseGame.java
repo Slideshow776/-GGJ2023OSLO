@@ -96,8 +96,8 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
     private void loadGameState() {
         GameUtils.loadGameState();
         if (!loadPersonalParameters) {
-            soundVolume = .75f;
-            musicVolume = .5f;
+            soundVolume = 1f;
+            musicVolume = 1f;
             voiceVolume = 1f;
         }
     }

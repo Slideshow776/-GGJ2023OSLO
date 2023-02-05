@@ -115,15 +115,15 @@ public class LevelScreen extends BaseScreen {
             Gdx.app.exit();
         else if (keycode == Keys.R)
             BaseGame.setActiveScreen(new LevelScreen(currentMap));
-        else if (keycode == Keys.T)
-            BaseGame.setActiveScreen(new LevelSelectScreen());
-        else if (keycode == Keys.NUMPAD_0) {
+        /*else if (keycode == Keys.T)
+            BaseGame.setActiveScreen(new LevelSelectScreen());*/
+        /*else if (keycode == Keys.NUMPAD_0) {
             OrthographicCamera camera = (OrthographicCamera) mainStage.getCamera();
             camera.zoom += .1f;
-        } else if (keycode == Keys.NUM_3) {
+        }*//* else if (keycode == Keys.NUM_3) {
             rootA.grow();
             rootB.grow();
-        }
+        }*/
         return super.keyDown(keycode);
     }
 
