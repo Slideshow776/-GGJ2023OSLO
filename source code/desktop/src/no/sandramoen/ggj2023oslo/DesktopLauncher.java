@@ -20,7 +20,7 @@ public class DesktopLauncher {
         if (isFullscreen)
             config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         else
-            setWindowedMode(.8f, config);
+            setWindowedMode(1.8f, config);
 
         new Lwjgl3Application(new MyGdxGame(), config);
     }

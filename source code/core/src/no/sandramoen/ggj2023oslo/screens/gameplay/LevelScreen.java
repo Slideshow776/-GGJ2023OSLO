@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
@@ -21,6 +23,7 @@ import no.sandramoen.ggj2023oslo.actors.Background;
 import no.sandramoen.ggj2023oslo.actors.Element;
 import no.sandramoen.ggj2023oslo.actors.List;
 import no.sandramoen.ggj2023oslo.actors.Root;
+import no.sandramoen.ggj2023oslo.actors.Vignette;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.particles.explosionEffect;
@@ -59,7 +62,7 @@ public class LevelScreen extends BaseScreen {
         initializeGUI();
         mapCenterCamera();
         GameUtils.playLoopingMusic(BaseGame.ambianceMusic);
-
+        new Vignette(0, 0, uiStage);
     }
 
     @Override
@@ -87,6 +90,8 @@ public class LevelScreen extends BaseScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 worldCoordinates = mainStage.getCamera().unproject(new Vector3(screenX, screenY, 0f));
         if (element.getCollisionBox().getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y))) {
+            listA.appear();
+            listB.appear();
             element.isActive = true;
             BaseGame.pickupSounds.get(MathUtils.random(0, BaseGame.pickupSounds.size - 1)).play(BaseGame.soundVolume);
             startEffect(worldCoordinates);
@@ -142,6 +147,7 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void moveElementToSpawnPoint() {
+        BaseGame.reverseSound.play(BaseGame.soundVolume);
         element.addAction(Actions.moveTo(spawnPoint.x, spawnPoint.y, .5f, Interpolation.smoother));
     }
 
@@ -166,7 +172,7 @@ public class LevelScreen extends BaseScreen {
         if (list.isScore) {
             score += list.NUM_SAME_TYPE;
             topLabel.restart();
-            topLabel.setText("score: " + score);
+            topLabel.setText("" + score);
             list.isScore = false;
             BaseGame.threesSound.play(BaseGame.soundVolume);
             return true;
@@ -221,8 +227,15 @@ public class LevelScreen extends BaseScreen {
 
         float speechBubbleOffsetX = 25;
         float speechBubbleScale = 2.5f;
+        float speechBubbleAnimationSpeed = .5f;
+
         BaseActor speechBubbleA = new BaseActor(0, 0, mainStage);
-        speechBubbleA.loadImage("speechBubble0");
+        Array<TextureAtlas.AtlasRegion> animationImages = new Array();
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles1"));
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles2"));
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles3"));
+        Animation animation = new Animation(speechBubbleAnimationSpeed, animationImages, Animation.PlayMode.LOOP_RANDOM);
+        speechBubbleA.setAnimation(animation);
         speechBubbleA.setScale(speechBubbleScale);
         speechBubbleA.setPosition(listA.getX() + speechBubbleOffsetX, listA.getY() + 14);
         speechBubbleA.setZIndex(listA.getZIndex() - 1);
@@ -230,6 +243,13 @@ public class LevelScreen extends BaseScreen {
 
         BaseActor speechBubbleB = new BaseActor(0, 0, mainStage);
         speechBubbleB.loadImage("speechBubble0");
+
+        animationImages.clear();
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles1"));
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles2"));
+        animationImages.add(BaseGame.textureAtlas.findRegion("speechBubbles3"));
+        animation = new Animation(speechBubbleAnimationSpeed, animationImages, Animation.PlayMode.LOOP_RANDOM);
+        speechBubbleB.setAnimation(animation);
         speechBubbleB.setScale(speechBubbleScale);
         speechBubbleB.flip();
         speechBubbleB.setPosition(listB.getX() - speechBubbleOffsetX, listB.getY() + 14);
@@ -242,7 +262,7 @@ public class LevelScreen extends BaseScreen {
     }
 
     private void initializeGUI() {
-        topLabel = new TypingLabel("score: 0", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold40white", BitmapFont.class), null));
+        topLabel = new TypingLabel("", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold40white", BitmapFont.class), null));
         topLabel.setAlignment(Align.top);
         topLabel.setVisible(true);
 

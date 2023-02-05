@@ -15,18 +15,29 @@ public class List extends BaseActor {
     private int maxCapacity;
     private Array<Element> elements;
     private BaseActor collisionBox;
+    private boolean isAppeared;
 
     public List(float x, float y, Stage stage) {
         super(x, y, stage);
-        loadImage("whitePixel");
+        loadImage("list");
         setSize(4, 32);
         centerAtPosition(x, y);
         setBoundaryRectangle();
         setCollisionBox();
 
         elements = new Array<>();
+        addAction(Actions.scaleTo(1, 0, 0));
     }
 
+    public void appear() {
+        if (!isAppeared) {
+            isAppeared = true;
+            addAction(Actions.sequence(
+                    Actions.delay(.25f),
+                    Actions.scaleTo(1, 1, 1)
+            ));
+        }
+    }
 
     public void setMaxCapacity(float elementHeight) {
         maxCapacity = (int) (getHeight() / elementHeight);

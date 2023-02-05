@@ -74,7 +74,6 @@ public class MapLoader {
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
             listA = new List(x, y, mainStage);
-            listA.setColor(Color.LIGHT_GRAY);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {
@@ -91,7 +90,6 @@ public class MapLoader {
             float x = mapObject.getProperties().get("x", Float.class) * BaseGame.UNIT_SCALE;
             float y = mapObject.getProperties().get("y", Float.class) * BaseGame.UNIT_SCALE;
             listB = new List(x, y, mainStage);
-            listB.setColor(Color.LIGHT_GRAY);
         } else if (tilemap.getTileList(layerName, propertyName).size() > 1) {
             Gdx.app.error(getClass().getSimpleName(), "Error => found more than one property: " + propertyName + " on layer: " + layerName + "!");
         } else {

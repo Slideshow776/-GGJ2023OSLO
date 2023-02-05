@@ -44,11 +44,10 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
 
     public static Music ambianceMusic;
 
-    public static Sound clickSound;
-    public static Sound hoverOverSound;
     public static Array<Sound> pickupSounds;
     public static Array<Sound> placeSounds;
     public static Sound threesSound;
+    public static Sound reverseSound;
 
     // game state
     public static Preferences preferences;
@@ -136,6 +135,7 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         for (int i = 1; i <= 4; i++)
             assetManager.load("audio/sound/Place_" + i + ".wav", Sound.class);
         assetManager.load("audio/sound/Threes.wav", Sound.class);
+        assetManager.load("audio/sound/reverse.wav", Sound.class);
 
         // tiled maps
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -163,6 +163,7 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         for (int i = 1; i <= 4; i++)
             placeSounds.add(assetManager.get("audio/sound/Place_" + i + ".wav", Sound.class));
         threesSound = assetManager.get("audio/sound/Threes.wav", Sound.class);
+        reverseSound = assetManager.get("audio/sound/reverse.wav", Sound.class);
 
         // tiled maps
         testMap = assetManager.get("maps/test.tmx", TiledMap.class);

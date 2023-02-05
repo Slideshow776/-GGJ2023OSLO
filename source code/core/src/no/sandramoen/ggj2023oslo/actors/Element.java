@@ -17,7 +17,7 @@ public class Element extends BaseActor {
     public boolean isActive;
     public Types type;
 
-    private enum Types {PINK, YELLOW, BLUE, GREEN}
+    private enum Types {PINK, YELLOW, BLUE, GREEN, RED}
 
     private BaseActor collisionBox;
     private RepeatAction rotateForever;
@@ -66,7 +66,7 @@ public class Element extends BaseActor {
     }
 
     private void setType() {
-        int random = MathUtils.random(0, 3);
+        int random = MathUtils.random(0, 4);
         if (random == 0) {
             type = Types.PINK;
             setColor(new Color(0.776f, 0.318f, 0.592f, 1f));
@@ -79,6 +79,9 @@ public class Element extends BaseActor {
         } else if (random == 3) {
             type = Types.GREEN;
             setColor(new Color(0.659f, 0.792f, 0.345f, 1f));
+        } else if (random == 4) {
+            type = Types.RED;
+            setColor(new Color(0.645f, 0.2f, .1f, 1f));
         }
     }
 
