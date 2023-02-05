@@ -17,6 +17,7 @@ import com.github.tommyettinger.textra.TypingLabel;
 
 import no.sandramoen.ggj2023oslo.actors.Element;
 import no.sandramoen.ggj2023oslo.actors.List;
+import no.sandramoen.ggj2023oslo.actors.Root;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
@@ -29,6 +30,9 @@ public class LevelScreen extends BaseScreen {
     private Element element;
     private List listA;
     private List listB;
+
+    private Root rootA;
+    private Root rootB;
 
     private boolean isGameOver;
     private Vector2 spawnPoint;
@@ -45,6 +49,7 @@ public class LevelScreen extends BaseScreen {
         this.tilemap = new TiledMapActor(currentMap, mainStage);
 
         initializeActors();
+        initializeArt();
         initializeGUI();
         mapCenterCamera();
     }
@@ -62,8 +67,12 @@ public class LevelScreen extends BaseScreen {
                 middleLabel.restart();
             }
 
-            checkAndUpdateScore(listA);
-            checkAndUpdateScore(listB);
+            if (checkAndUpdateScore(listA))
+                rootA.grow();
+
+            if (checkAndUpdateScore(listB))
+                rootB.grow();
+
         }
     }
 
@@ -104,6 +113,9 @@ public class LevelScreen extends BaseScreen {
         else if (keycode == Keys.NUMPAD_0) {
             OrthographicCamera camera = (OrthographicCamera) mainStage.getCamera();
             camera.zoom += .1f;
+        } else if (keycode == Keys.NUM_3) {
+            rootA.grow();
+            rootB.grow();
         }
         return super.keyDown(keycode);
     }
@@ -129,13 +141,15 @@ public class LevelScreen extends BaseScreen {
         element = new Element(spawnPoint.x, spawnPoint.y, mainStage);
     }
 
-    private void checkAndUpdateScore(List list) {
+    private boolean checkAndUpdateScore(List list) {
         if (list.isScore) {
             score += list.NUM_SAME_TYPE;
             topLabel.restart();
             topLabel.setText("score: " + score);
             list.isScore = false;
+            return true;
         }
+        return false;
     }
 
     private void initializeActors() {
@@ -161,6 +175,46 @@ public class LevelScreen extends BaseScreen {
             OrthographicCamera camera = (OrthographicCamera) mainStage.getCamera();
             camera.zoom = 1f;
         }));
+    }
+
+    private void initializeArt() {
+        int faceScale = 4;
+        float faceOffsetX = 5;
+        BaseActor faceA = new BaseActor(0, 0, mainStage);
+        faceA.loadImage("faceA");
+        faceA.setScale(faceScale);
+        faceA.setPosition(listA.getX() + faceOffsetX, listA.getY() + 12);
+        faceA.flip();
+        faceA.setZIndex(listA.getZIndex() - 1);
+
+        BaseActor faceB = new BaseActor(0, 0, mainStage);
+        faceB.loadImage("faceB");
+        faceB.setScale(faceScale);
+        faceB.setPosition(listB.getX() - faceOffsetX, listB.getY() + 12);
+        faceB.setZIndex(listB.getZIndex() - 1);
+
+        /* ------------ */
+
+        float speechBubbleOffsetX = 25;
+        float speechBubbleScale = 2.5f;
+        BaseActor speechBubbleA = new BaseActor(0, 0, mainStage);
+        speechBubbleA.loadImage("speechBubble0");
+        speechBubbleA.setScale(speechBubbleScale);
+        speechBubbleA.setPosition(listA.getX() + speechBubbleOffsetX, listA.getY() + 14);
+        speechBubbleA.setZIndex(listA.getZIndex() - 1);
+
+
+        BaseActor speechBubbleB = new BaseActor(0, 0, mainStage);
+        speechBubbleB.loadImage("speechBubble0");
+        speechBubbleB.setScale(speechBubbleScale);
+        speechBubbleB.flip();
+        speechBubbleB.setPosition(listB.getX() - speechBubbleOffsetX, listB.getY() + 14);
+        speechBubbleB.setZIndex(listB.getZIndex() - 1);
+
+        /* ------------ */
+
+        rootA = new Root(faceA.getX(), 5, mainStage, true);
+        rootB = new Root(faceB.getX(), 5, mainStage, false);
     }
 
     private void initializeGUI() {

@@ -78,7 +78,6 @@ public class List extends BaseActor {
                 getHeight() / 2 - collisionBox.getHeight() / 2
         );
         collisionBox.setBoundaryRectangle();
-        collisionBox.setDebug(true);
         addActor(collisionBox);
     }
 
