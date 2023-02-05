@@ -41,7 +41,13 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
     public static Sound click1Sound;
     public static Sound hoverOverEnterSound;
 
-    public static Music menuMusic;
+    public static Music ambianceMusic;
+
+    public static Sound clickSound;
+    public static Sound hoverOverSound;
+    public static Array<Sound> pickupSounds;
+    public static Array<Sound> placeSounds;
+    public static Sound threesSound;
 
     // game state
     public static Preferences preferences;
@@ -118,11 +124,16 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         assetManager.load(new AssetDescriptor("shaders/shockwave.fs", Text.class, new TextLoader.TextParameter()));
 
         // music
-        // assetManager.load("audio/music/398937__mypantsfelldown__metal-footsteps.wav", Music.class);
+        assetManager.load("audio/music/Ambience.wav", Music.class);
 
         // sound
         assetManager.load("audio/sound/click1.wav", Sound.class);
         assetManager.load("audio/sound/hoverOverEnter.wav", Sound.class);
+        for (int i = 1; i <= 6; i++)
+            assetManager.load("audio/sound/Pickup_" + i + ".wav", Sound.class);
+        for (int i = 1; i <= 4; i++)
+            assetManager.load("audio/sound/Place_" + i + ".wav", Sound.class);
+        assetManager.load("audio/sound/Threes.wav", Sound.class);
 
         // tiled maps
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -137,11 +148,18 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         shockwaveShader = assetManager.get("shaders/shockwave.fs", Text.class).getString();
 
         // music
-        // menuMusic = assetManager.get("audio/music/587251__lagmusics__epic-and-aggressive-percussion.mp3", Music.class);
+        ambianceMusic = assetManager.get("audio/music/Ambience.wav", Music.class);
 
         // sound
         click1Sound = assetManager.get("audio/sound/click1.wav", Sound.class);
         hoverOverEnterSound = assetManager.get("audio/sound/hoverOverEnter.wav", Sound.class);
+        pickupSounds = new Array<>();
+        for (int i = 1; i <= 6; i++)
+            pickupSounds.add(assetManager.get("audio/sound/Pickup_" + i + ".wav", Sound.class));
+        placeSounds = new Array<>();
+        for (int i = 1; i <= 4; i++)
+            placeSounds.add(assetManager.get("audio/sound/Place_" + i + ".wav", Sound.class));
+        threesSound = assetManager.get("audio/sound/Threes.wav", Sound.class);
 
         // tiled maps
         testMap = assetManager.get("maps/test.tmx", TiledMap.class);

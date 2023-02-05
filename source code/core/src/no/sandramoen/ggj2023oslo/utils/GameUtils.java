@@ -61,7 +61,7 @@ public class GameUtils {
     }
 
     public static void stopAllMusic() {
-
+        BaseGame.ambianceMusic.stop();
     }
 
     public static float normalizeValue(float value, float min, float max) {

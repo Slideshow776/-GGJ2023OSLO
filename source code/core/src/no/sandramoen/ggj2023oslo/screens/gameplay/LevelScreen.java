@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -24,6 +25,7 @@ import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 import no.sandramoen.ggj2023oslo.screens.BaseScreen;
 import no.sandramoen.ggj2023oslo.screens.shell.LevelSelectScreen;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
+import no.sandramoen.ggj2023oslo.utils.GameUtils;
 
 public class LevelScreen extends BaseScreen {
     private Array<ImpassableTerrain> impassables;
@@ -52,6 +54,7 @@ public class LevelScreen extends BaseScreen {
         initializeArt();
         initializeGUI();
         mapCenterCamera();
+        GameUtils.playLoopingMusic(BaseGame.ambianceMusic);
     }
 
     @Override
@@ -79,18 +82,22 @@ public class LevelScreen extends BaseScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 worldCoordinates = mainStage.getCamera().unproject(new Vector3(screenX, screenY, 0f));
-        if (element.getCollisionBox().getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y)))
+        if (element.getCollisionBox().getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y))) {
             element.isActive = true;
+            BaseGame.pickupSounds.get(MathUtils.random(0, BaseGame.pickupSounds.size - 1)).play(BaseGame.soundVolume);
+        }
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         element.isActive = false;
-        if (isListCollisions())
+        if (isListCollisions()) {
             generateNewElement();
-        else
+            BaseGame.placeSounds.get(MathUtils.random(0, BaseGame.placeSounds.size - 1)).play(BaseGame.soundVolume);
+        } else {
             moveElementToSpawnPoint();
+        }
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
@@ -147,6 +154,7 @@ public class LevelScreen extends BaseScreen {
             topLabel.restart();
             topLabel.setText("score: " + score);
             list.isScore = false;
+            BaseGame.threesSound.play(BaseGame.soundVolume);
             return true;
         }
         return false;
