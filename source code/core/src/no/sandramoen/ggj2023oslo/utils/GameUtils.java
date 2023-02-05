@@ -43,7 +43,7 @@ public class GameUtils {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 super.exit(event, x, y, pointer, toActor);
-                widget.setColor(Color.WHITE);
+                widget.setColor(Color.DARK_GRAY);
             }
         });
     }

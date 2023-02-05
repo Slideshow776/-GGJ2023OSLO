@@ -4,6 +4,13 @@ size: 1024, 128
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+element
+  rotate: false
+  xy: 600, 50
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 faceA
   rotate: false
   xy: 426, 7

@@ -31,6 +31,7 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
 
     public static String defaultShader;
     public static String shockwaveShader;
+    public static String backgroundShader;
 
     public static Array<TiledMap> maps;
     public static TiledMap testMap;
@@ -122,6 +123,7 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         // shaders
         assetManager.load(new AssetDescriptor("shaders/default.vs", Text.class, new TextLoader.TextParameter()));
         assetManager.load(new AssetDescriptor("shaders/shockwave.fs", Text.class, new TextLoader.TextParameter()));
+        assetManager.load(new AssetDescriptor("shaders/voronoi01.fs", Text.class, new TextLoader.TextParameter()));
 
         // music
         assetManager.load("audio/music/Ambience.wav", Music.class);
@@ -146,6 +148,7 @@ public abstract class BaseGame extends Game implements AssetErrorListener {
         // shaders
         defaultShader = assetManager.get("shaders/default.vs", Text.class).getString();
         shockwaveShader = assetManager.get("shaders/shockwave.fs", Text.class).getString();
+        backgroundShader = assetManager.get("shaders/voronoi01.fs", Text.class).getString();
 
         // music
         ambianceMusic = assetManager.get("audio/music/Ambience.wav", Music.class);

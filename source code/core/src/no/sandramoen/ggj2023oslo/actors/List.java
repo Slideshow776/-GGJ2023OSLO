@@ -92,7 +92,7 @@ public class List extends BaseActor {
         for (int i = 0; i < elements.size; i++) {
             elements.get(i).addAction(Actions.moveTo(
                     getX(),
-                    (i * elementHeight) + listPosition - listHeight,
+                    (i * elementHeight * .975f) + listPosition - listHeight,
                     MathUtils.random(.5f, 1f),
                     Interpolation.bounceOut
             ));

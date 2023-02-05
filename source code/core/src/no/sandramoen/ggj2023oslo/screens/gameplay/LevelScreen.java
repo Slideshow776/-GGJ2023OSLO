@@ -2,6 +2,7 @@ package no.sandramoen.ggj2023oslo.screens.gameplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 
 import com.github.tommyettinger.textra.TypingLabel;
 
+import no.sandramoen.ggj2023oslo.actors.Background;
 import no.sandramoen.ggj2023oslo.actors.Element;
 import no.sandramoen.ggj2023oslo.actors.List;
 import no.sandramoen.ggj2023oslo.actors.Root;
@@ -24,6 +26,7 @@ import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 import no.sandramoen.ggj2023oslo.screens.BaseScreen;
 import no.sandramoen.ggj2023oslo.screens.shell.LevelSelectScreen;
+import no.sandramoen.ggj2023oslo.ui.MadeByLabel;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 import no.sandramoen.ggj2023oslo.utils.GameUtils;
 
@@ -50,11 +53,13 @@ public class LevelScreen extends BaseScreen {
         currentMap = tiledMap;
         this.tilemap = new TiledMapActor(currentMap, mainStage);
 
+        new Background(0, 0, mainStage, new Vector3(.1f, .1f, .1f));
         initializeActors();
         initializeArt();
         initializeGUI();
         mapCenterCamera();
         GameUtils.playLoopingMusic(BaseGame.ambianceMusic);
+
     }
 
     @Override
@@ -75,7 +80,6 @@ public class LevelScreen extends BaseScreen {
 
             if (checkAndUpdateScore(listB))
                 rootB.grow();
-
         }
     }
 
@@ -93,6 +97,7 @@ public class LevelScreen extends BaseScreen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         element.isActive = false;
         if (isListCollisions()) {
+            element.stopRotation();
             generateNewElement();
             BaseGame.placeSounds.get(MathUtils.random(0, BaseGame.placeSounds.size - 1)).play(BaseGame.soundVolume);
         } else {
@@ -165,9 +170,11 @@ public class LevelScreen extends BaseScreen {
         loadActorsFromMap();
         spawnPoint = new Vector2(element.getX() - element.getWidth() / 2, element.getY() - element.getHeight() / 2);
         element.centerAtPosition(element.getX(), element.getY());
+        /*element.setZIndex(3);*/
         listA.setMaxCapacity(element.getHeight());
+        listA.setZIndex(3);
         listB.setMaxCapacity(element.getHeight());
-        // new Background(0, 0, mainStage);
+        listB.setZIndex(2);
     }
 
     private void loadActorsFromMap() {
@@ -232,11 +239,13 @@ public class LevelScreen extends BaseScreen {
 
         middleLabel = new TypingLabel("{SLOWER}G A M E   O V E R !", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold59white", BitmapFont.class), null));
         middleLabel.setAlignment(Align.top);
+        middleLabel.setColor(new Color(0.647f, 0.188f, 0.188f, 1f));
         middleLabel.setVisible(false);
 
         uiTable.defaults().padTop(Gdx.graphics.getHeight() * .02f);
-        uiTable.add(topLabel).height(topLabel.getPrefHeight() * 1.5f).expandY().top().width(Gdx.graphics.getWidth()).row();
-        uiTable.add(middleLabel).height(middleLabel.getPrefHeight() * 1.5f).expandY().top().row();
+        uiTable.add(topLabel).height(topLabel.getPrefHeight() * 1.5f).top().width(Gdx.graphics.getWidth()).row();
+        uiTable.add(middleLabel).height(middleLabel.getPrefHeight() * 1.5f).padTop(Gdx.graphics.getHeight() * .25f).expandY().top().row();
+        uiTable.add(new MadeByLabel()).padBottom(Gdx.graphics.getHeight() * .02f);
         // uiTable.setDebug(true);
     }
 }

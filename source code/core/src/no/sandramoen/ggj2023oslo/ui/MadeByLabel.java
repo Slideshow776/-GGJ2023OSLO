@@ -17,7 +17,7 @@ public class MadeByLabel extends TypingLabel {
     public MadeByLabel() {
         super("Made by Sandra Moen 2023", new Label.LabelStyle(BaseGame.mySkin.get("Play-Bold20white", BitmapFont.class), null));
         setAlignment(Align.center);
-        setColor(Color.GRAY);
+        setColor(Color.DARK_GRAY);
         addClickListener();
         GameUtils.setWidgetHoverColor(this);
     }

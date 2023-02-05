@@ -37,10 +37,6 @@
   </data>
  </layer>
  <objectgroup id="2" name="actors">
-  <object id="22" gid="9" x="0" y="32" width="32" height="32"/>
-  <object id="23" gid="9" x="0" y="720" width="32" height="32"/>
-  <object id="24" gid="9" x="1248" y="720" width="32" height="32"/>
-  <object id="25" gid="9" x="1248" y="32" width="32" height="32"/>
   <object id="32" gid="2" x="160" y="352" width="32" height="32"/>
   <object id="34" gid="3" x="1088" y="352" width="32" height="32">
    <properties>
