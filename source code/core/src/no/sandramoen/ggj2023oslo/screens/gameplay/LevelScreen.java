@@ -23,9 +23,9 @@ import no.sandramoen.ggj2023oslo.actors.List;
 import no.sandramoen.ggj2023oslo.actors.Root;
 import no.sandramoen.ggj2023oslo.actors.map.ImpassableTerrain;
 import no.sandramoen.ggj2023oslo.actors.map.TiledMapActor;
+import no.sandramoen.ggj2023oslo.actors.particles.explosionEffect;
 import no.sandramoen.ggj2023oslo.actors.utils.BaseActor;
 import no.sandramoen.ggj2023oslo.screens.BaseScreen;
-import no.sandramoen.ggj2023oslo.screens.shell.LevelSelectScreen;
 import no.sandramoen.ggj2023oslo.ui.MadeByLabel;
 import no.sandramoen.ggj2023oslo.utils.BaseGame;
 import no.sandramoen.ggj2023oslo.utils.GameUtils;
@@ -89,6 +89,7 @@ public class LevelScreen extends BaseScreen {
         if (element.getCollisionBox().getBoundaryPolygon().contains(new Vector2(worldCoordinates.x, worldCoordinates.y))) {
             element.isActive = true;
             BaseGame.pickupSounds.get(MathUtils.random(0, BaseGame.pickupSounds.size - 1)).play(BaseGame.soundVolume);
+            startEffect(worldCoordinates);
         }
         return super.touchDown(screenX, screenY, pointer, button);
     }
@@ -130,6 +131,14 @@ public class LevelScreen extends BaseScreen {
             rootB.grow();
         }*/
         return super.keyDown(keycode);
+    }
+
+    private void startEffect(Vector3 worldCoordinates) {
+        explosionEffect effect = new explosionEffect();
+        effect.setScale(.005f);
+        effect.setPosition(worldCoordinates.x, worldCoordinates.y);
+        mainStage.addActor(effect);
+        effect.start();
     }
 
     private void moveElementToSpawnPoint() {
