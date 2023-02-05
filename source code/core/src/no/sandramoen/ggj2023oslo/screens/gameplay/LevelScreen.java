@@ -52,6 +52,8 @@ public class LevelScreen extends BaseScreen {
     private TiledMapActor tilemap;
     private TiledMap currentMap;
 
+    private Vignette vignette;
+
     public LevelScreen(TiledMap tiledMap) {
         currentMap = tiledMap;
         this.tilemap = new TiledMapActor(currentMap, mainStage);
@@ -62,7 +64,7 @@ public class LevelScreen extends BaseScreen {
         initializeGUI();
         mapCenterCamera();
         GameUtils.playLoopingMusic(BaseGame.ambianceMusic);
-        new Vignette(0, 0, uiStage);
+        vignette = new Vignette(0, 0, uiStage);
     }
 
     @Override
@@ -136,6 +138,13 @@ public class LevelScreen extends BaseScreen {
             rootB.grow();
         }*/
         return super.keyDown(keycode);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        vignette.setPosition(0, 0);
+        vignette.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     private void startEffect(Vector3 worldCoordinates) {

@@ -13,7 +13,7 @@ public class DesktopLauncher {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("GGJ2023OSLO");
-        config.setResizable(false);
+        config.setResizable(true);
         // config.setWindowIcon("images/excluded/icon_16x16.png", "images/excluded/icon_32x32.png");
 
         boolean isFullscreen = true;
