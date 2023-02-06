@@ -4,6 +4,7 @@
 
 * [Play it on itch.io!](https://sandramoen.itch.io/roots-of-empathy)
 * [Play it on github](https://slideshow776.github.io/GGJ2023OSLO/)
+* [Trailer](https://www.youtube.com/watch?v=4SvnQrRGVis)
 
 Drag the colors to either list, three or more neighbours of same colors score a point.
 
