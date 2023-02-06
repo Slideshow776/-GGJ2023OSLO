@@ -7,6 +7,8 @@
 
 Drag the colors to either list, three or more neighbours of same colors score a point.
 
+* [Project board](https://github.com/users/Slideshow776/projects/3/views/1)
+
 ## Credits: 
 * Game designer and coder: Sandra Moen
 * Audio: [Jonathan Wieringa Hildebrand](https://globalgamejam.org/users/moffedillen)
