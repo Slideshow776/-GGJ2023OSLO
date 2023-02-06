@@ -9,5 +9,6 @@ Drag the colors to either list, three or more neighbours of same colors score a 
 
 ## Credits: 
 * Game designer and coder: Sandra Moen
+* Audio: [Jonathan Wieringa Hildebrand](https://globalgamejam.org/users/moffedillen)
 
 _All team members participated in GGJ2023 Oslo site._
